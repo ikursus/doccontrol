@@ -45,11 +45,11 @@ Route::get('dashboard', function () {
 });
 
 
-Route::get('documents', fn() => 'Ini halaman senarai documents');
-Route::get('documents/create', fn() => 'Ini halaman borang tambah documents');
+Route::get('documents', fn() => view('folder-documents.index'));
+Route::get('documents/create', fn() => view('folder-documents.create'));
 Route::post('documents/create', fn() => 'Borang berjaya dihantar');
 Route::get('documents/{id}', fn() => 'Ini halaman maklumat documents');
-Route::get('documents/{id}/edit', fn() => 'Ini halaman borang kemaskini documents');
+Route::get('documents/{id}/edit', fn() => view('folder-documents.edit'));
 Route::patch('documents/{id}/edit', fn() => 'Borang berjaya dikemaskini');
 Route::delete('documents/{id}', fn() => 'Rekod berjaya dihapuskan');
 
@@ -87,3 +87,15 @@ Route::get('/users', function () {
     return view('folder-users.template-senarai-users', compact('senaraiUsers', 'pageTitle', 'inputField'));
 
 });
+
+
+Route::get('users/create', fn() => view('folder-users.template-user-tambah'));
+Route::post('users/create', fn() => 'Borang berjaya dihantar');
+Route::get('users/{id}', fn() => view('folder-users.template-user-show'));
+Route::get('users/{id}/edit', fn() => view('folder-users.template-user-edit'));
+Route::patch('users/{id}/edit', fn() => 'Borang berjaya dikemaskini');
+Route::delete('users/{id}', fn() => 'Rekod berjaya dihapuskan');
+
+Route::get('laporan', fn() => view('folder-reporting.index'));
+
+Route::get('logout', fn() => redirect('/'));
