@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\Auth\LogoutController;
 
 // Route::get($uri, $action);
 
@@ -11,7 +14,7 @@ Route::get('/', function () {
 
 Route::get('login', function () {
     return view('authentication.template-login');
-});
+})->name('login');
 
 Route::post('/login', function () {
     // Check butiran login betul @ tidak
@@ -36,66 +39,39 @@ Route::get('/groups/{username?}', function ($username = NULL) {
 // Cara 1
 Route::get('/dashboard', fn() => view('template-dashboard'));
 
-// Cara 2
-Route::view('dashboard', 'template-dashboard');
+// // Cara 2
+// Route::view('dashboard', 'template-dashboard');
 
-// Cara 3
-Route::get('dashboard', function () {
-    return view('template-dashboard');
-});
-
-
-Route::get('documents', fn() => view('folder-documents.index'));
-Route::get('documents/create', fn() => view('folder-documents.create'));
-Route::post('documents/create', fn() => 'Borang berjaya dihantar');
-Route::get('documents/{id}', fn() => 'Ini halaman maklumat documents');
-Route::get('documents/{id}/edit', fn() => view('folder-documents.edit'));
-Route::patch('documents/{id}/edit', fn() => 'Borang berjaya dikemaskini');
-Route::delete('documents/{id}', fn() => 'Rekod berjaya dihapuskan');
+// // Cara 3
+// Route::get('dashboard', function () {
+//     return view('template-dashboard');
+// });
 
 
-Route::get('/users', function () {
+// Route::get('documents', fn() => view('folder-documents.index'));
+// Route::get('documents/tambah', fn() => view('folder-documents.create'));
+// Route::post('documents/tambah', fn() => 'Borang berjaya dihantar');
+// Route::get('documents/{id}', fn() => 'Ini halaman maklumat documents');
+// Route::get('documents/{id}/kemaskini', fn() => view('folder-documents.edit'));
+// Route::patch('documents/{id}/kemaskini', fn() => 'Borang berjaya dikemaskini');
+// Route::delete('documents/{id}', fn() => 'Rekod berjaya dihapuskan');
 
-    $pageTitle = 'Senarai Users';
-
-    // $senarai_users =
-    $senaraiUsers = [
-        ['id' => 1, 'name' => 'Ali', 'email' => 'ali@gmail.com', 'status' => 'active'],
-        ['id' => 2, 'name' => 'Abu', 'email' => 'abu@gmail.com', 'status' => 'inactive'],
-        ['id' => 3, 'name' => 'Siti', 'email' => 'siti@gmail.com', 'status' => 'pending'],
-        ['id' => 4, 'name' => 'Lee', 'email' => 'lee@gmail.com', 'status' => 'active'],
-        ['id' => 5, 'name' => 'Muthu', 'email' => 'muthu@gmail.com', 'status' => 'banned'],
-    ];
-
-    $inputField = '<script>alert(\'test\')</script>';
-
-    // Return tanpa sebarang data
-    // return view('folder-users.template-senarai-users');
-
-    // Cara 1 return dengan data
-    // return view('folder-users.template-senarai-users')
-    // ->with('senaraiUsers', $senaraiUsers)
-    // ->with('pageTitle', $pageTitle);
-
-    // Cara 2 return data
-    // return view('folder-users.template-senarai-users', [
-    //     'senaraiUsers' => $senaraiUsers,
-    //     'pageTitle' => $pageTitle
-    // ]);
-
-    // Cara 3 return data
-    return view('folder-users.template-senarai-users', compact('senaraiUsers', 'pageTitle', 'inputField'));
+// Guna resource hanya apabila controller menggunakan resource method (--resource / -r)
+Route::group(['middleware' => 'auth'], function () {
 
 });
 
+Route::get('/users', [UserController::class, 'paparSenaraiUsers']);
+    Route::get('users/create', [UserController::class, 'paparBorangTambah']);
+    Route::post('users/create', [UserController::class, 'terimaDataBorangTambah']);
+    Route::get('users/{id}', [UserController::class, 'paparRekodUser'])->where('id', '[0-9]+');
+    Route::get('users/{id}/edit', [UserController::class, 'paparBorangEdit']);
+    Route::patch('users/{id}/edit', [UserController::class, 'terimaDataBorangEdit']);
+    Route::delete('users/{id}', [UserController::class, 'deleteUser']);
 
-Route::get('users/create', fn() => view('folder-users.template-user-tambah'));
-Route::post('users/create', fn() => 'Borang berjaya dihantar');
-Route::get('users/{id}', fn() => view('folder-users.template-user-show'));
-Route::get('users/{id}/edit', fn() => view('folder-users.template-user-edit'));
-Route::patch('users/{id}/edit', fn() => 'Borang berjaya dikemaskini');
-Route::delete('users/{id}', fn() => 'Rekod berjaya dihapuskan');
+    Route::get('laporan', fn() => view('folder-reporting.index'));
 
-Route::get('laporan', fn() => view('folder-reporting.index'));
+Route::resource('documents', DocumentController::class);
 
-Route::get('logout', fn() => redirect('/'));
+
+Route::get('logout', LogoutController::class);

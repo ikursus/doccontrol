@@ -3,47 +3,20 @@
 @section('isi-content')
 
 <!-- Page Heading -->
-<h1 class="h3 mb-4 text-gray-800">Tambah User</h1>
+<h1 class="h3 mb-4 text-gray-800">Edit User: {{ $id }}</h1>
 
-<form method="POST">
-    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-    @csrf
+<form>
 <div class="card">
     <div class="card-body">
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <div class="form-group">
             <label>Nama</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
-            @error('name')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
+            <input type="text" class="form-control" name="name">
         </div>
 
         <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" name="email">
-        </div>
-
-        <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone">
-            @error('phone')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
         </div>
 
         <div class="form-group">
