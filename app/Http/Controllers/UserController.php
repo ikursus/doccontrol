@@ -57,12 +57,13 @@ class UserController extends Controller
             'status' => ['required', 'in:active,inactive,pending,banned']
         ]);
 
-        // Simpan ke DB
+        // Encrypt password
         $data['password'] = bcrypt($data['password']);
 
+        // Simpan ke DB
         DB::table('users')->insert($data);
-        //return $data;
-        // Die and dump
+
+        // Response
         return redirect()->route('users.index')
         ->with('alert-success', 'Rekod berjaya disimpan!');
     }
