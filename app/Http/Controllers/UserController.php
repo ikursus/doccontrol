@@ -58,6 +58,8 @@ class UserController extends Controller
         ]);
 
         // Simpan ke DB
+        $data['password'] = bcrypt($data['password']);
+
         DB::table('users')->insert($data);
         //return $data;
         // Die and dump
