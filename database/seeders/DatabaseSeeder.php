@@ -22,39 +22,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        DB::table('users')->insert([
-            'name' => 'Ali',
-            'email' => 'ali@gmail.com',
-            'password' => bcrypt('pass123'),
-            'status' => 'active'
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Abu',
-            'email' => 'abu@gmail.com',
-            'password' => bcrypt('pass123'),
-            'status' => 'inactive'
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Siti',
-            'email' => 'siti@gmail.com',
-            'password' => bcrypt('pass123'),
-            'status' => 'pending'
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Muthu',
-            'email' => 'muthu@gmail.com',
-            'password' => bcrypt('pass123'),
-            'status' => 'active'
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Ah Chong',
-            'email' => 'ahchong@gmail.com',
-            'password' => bcrypt('pass123'),
-            'status' => 'banned'
-        ]);
+        $this->call(UserSeeder::class);
+        // $this->call(DocumentSeeder::class);
+        // $this->call(RoleSeeder::class);
+        // $this->call(CountrySeeder::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -56,13 +57,12 @@ class UserController extends Controller
             'status' => ['required', 'in:active,inactive,pending,banned']
         ]);
 
-
-
         // Simpan ke DB
-
+        DB::table('users')->insert($data);
         //return $data;
         // Die and dump
-        dd($data);
+        return redirect()->route('users.index')
+        ->with('alert-success', 'Rekod berjaya disimpan!');
     }
 
     public function paparRekodUser($id)
