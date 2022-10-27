@@ -24,7 +24,7 @@
 
     </div>
     <div class="card-footer">
-        <a href="/documents/create" class="btn btn-primary">Tambah Dokumen</a>
+        <a href="{{ route('documents.create') }}" class="btn btn-primary">Tambah Dokumen</a>
     </div>
 </div>
 

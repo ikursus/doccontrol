@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DocumentStoreRequest;
 
 class DocumentController extends Controller
 {
@@ -32,9 +33,9 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DocumentStoreRequest $request)
     {
-        //
+        return $request->all();
     }
 
     /**

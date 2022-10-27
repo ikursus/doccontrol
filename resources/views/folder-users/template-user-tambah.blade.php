@@ -5,21 +5,11 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Tambah User</h1>
 
-<form method="POST">
+<form method="POST" action="{{ route('users.store') }}">
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     @csrf
 <div class="card">
     <div class="card-body">
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         <div class="form-group">
             <label>Nama</label>
@@ -33,12 +23,12 @@
 
         <div class="form-group">
             <label>Email</label>
-            <input type="email" class="form-control" name="email">
+            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
         </div>
 
         <div class="form-group">
             <label>Phone</label>
-            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone">
+            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
             @error('phone')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -60,10 +50,10 @@
             <label>Status</label>
             <select name="status" class="form-control">
                 <option value="">-- Sila Pilih--</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="pending">Pending</option>
-                <option value="banned">Banned</option>
+                <option value="active" {{ old('status') == 'active' ? 'selected=selected' : NULL }}>Active</option>
+                <option value="inactive" {{ old('status') == 'inactive' ? 'selected=selected' : NULL }}>Inactive</option>
+                <option value="pending" {{ old('status') == 'pending' ? 'selected=selected' : NULL }}>Pending</option>
+                <option value="banned" {{ old('status') == 'banned' ? 'selected=selected' : NULL }}>Banned</option>
             </select>
         </div>
 

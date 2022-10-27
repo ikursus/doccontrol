@@ -47,12 +47,22 @@ class UserController extends Controller
 
     public function terimaDataBorangTambah(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'min:5'],
-            'phone' => ['required', 'digits_between:9,11']
+        // Validasi data
+        $data = $request->validate([
+            'name' => 'required|min:3|string', // cara 1 tulis validation rules
+            'email' => ['required', 'email:filter'], // cara 2 tulis validation rules
+            'phone' => ['required'],
+            'password' => ['required', 'confirmed'],
+            'status' => ['required', 'in:active,inactive,pending,banned']
         ]);
 
-        return $request->all();
+
+
+        // Simpan ke DB
+
+        //return $data;
+        // Die and dump
+        dd($data);
     }
 
     public function paparRekodUser($id)

@@ -35,8 +35,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/users">Senarai Users</a>
-                <a class="collapse-item" href="/users/create">Tambah User</a>
+                <a class="collapse-item" href="{{ route('users.index') }}">Senarai Users</a>
+                <a class="collapse-item" href="{{ route('users.create') }}">Tambah User</a>
             </div>
         </div>
     </li>
@@ -51,8 +51,8 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/documents">Senarai Dokumen</a>
-                <a class="collapse-item" href="/documents/create">Tambah Dokumen</a>
+                <a class="collapse-item" href="{{ route('documents.index') }}">Senarai Dokumen</a>
+                <a class="collapse-item" href="{{ route('documents.create') }}">Tambah Dokumen</a>
             </div>
         </div>
     </li>

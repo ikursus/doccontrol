@@ -61,17 +61,23 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-Route::get('/users', [UserController::class, 'paparSenaraiUsers']);
-    Route::get('users/create', [UserController::class, 'paparBorangTambah']);
-    Route::post('users/create', [UserController::class, 'terimaDataBorangTambah']);
-    Route::get('users/{id}', [UserController::class, 'paparRekodUser'])->where('id', '[0-9]+');
-    Route::get('users/{id}/edit', [UserController::class, 'paparBorangEdit']);
-    Route::patch('users/{id}/edit', [UserController::class, 'terimaDataBorangEdit']);
-    Route::delete('users/{id}', [UserController::class, 'deleteUser']);
+Route::get('/users', [UserController::class, 'paparSenaraiUsers'])->name('users.index');
+Route::get('users/create', [UserController::class, 'paparBorangTambah'])->name('users.create');
+Route::post('users/create', [UserController::class, 'terimaDataBorangTambah'])->name('users.store');
+Route::get('users/{id}', [UserController::class, 'paparRekodUser'])->where('id', '[0-9]+')->name('users.show');
+Route::get('users/{id}/edit', [UserController::class, 'paparBorangEdit'])->name('users.edit');
+Route::patch('users/{id}/edit', [UserController::class, 'terimaDataBorangEdit'])->name('users.update');
+Route::delete('users/{id}', [UserController::class, 'deleteUser'])->name('users.destroy');
 
-    Route::get('laporan', fn() => view('folder-reporting.index'));
+Route::get('laporan', fn() => view('folder-reporting.index'));
 
 Route::resource('documents', DocumentController::class);
+
+// Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
+// Route::get('documents/create', [DocumentController::class, 'create'])->name('documents.create');
+// Route::post('documents/create', [DocumentController::class, 'store'])->name('documents.store');
+
+Route::get('reports/{id}/registration/add', fn() => 'test')->name('reports.registration.create');
 
 
 Route::get('logout', LogoutController::class);

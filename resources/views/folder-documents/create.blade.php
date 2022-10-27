@@ -5,18 +5,19 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-4 text-gray-800">Tambah Dokumen</h1>
 
-<form enctype="multipart/form-data">
+<form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
+    @csrf
 <div class="card">
     <div class="card-body">
 
         <div class="form-group">
             <label>Nama</label>
-            <input type="text" class="form-control" name="name">
+            <input type="text" class="form-control" name="name" value="{{ old('name') }}">
         </div>
 
         <div class="form-group">
             <label>Penerangan</label>
-            <textarea class="form-control" name="description"></textarea>
+            <textarea class="form-control" name="description">{{ old('description') }}</textarea>
         </div>
 
         <div class="form-group">

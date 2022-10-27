@@ -37,7 +37,7 @@
 
     </div>
     <div class="card-footer">
-        <a href="/users/create" class="btn btn-primary">Tambah User</a>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah User</a>
     </div>
 </div>
 
