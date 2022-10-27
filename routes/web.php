@@ -67,7 +67,7 @@ Route::post('users/create', [UserController::class, 'terimaDataBorangTambah'])->
 Route::get('users/{id}', [UserController::class, 'paparRekodUser'])->where('id', '[0-9]+')->name('users.show');
 Route::get('users/{id}/edit', [UserController::class, 'paparBorangEdit'])->name('users.edit');
 Route::patch('users/{id}/edit', [UserController::class, 'terimaDataBorangEdit'])->name('users.update');
-Route::delete('users/{id}', [UserController::class, 'deleteUser'])->name('users.destroy');
+Route::get('users/{id}/delete', [UserController::class, 'deleteUser'])->name('users.destroy');
 
 Route::get('laporan', fn() => view('folder-reporting.index'));
 

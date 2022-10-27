@@ -12,13 +12,10 @@ class UserController extends Controller
         $pageTitle = 'Senarai Users';
 
         // $senarai_users =
-        $senaraiUsers = [
-            ['id' => 1, 'name' => 'Ali', 'email' => 'ali@gmail.com', 'status' => 'active'],
-            ['id' => 2, 'name' => 'Abu', 'email' => 'abu@gmail.com', 'status' => 'inactive'],
-            ['id' => 3, 'name' => 'Siti', 'email' => 'siti@gmail.com', 'status' => 'pending'],
-            ['id' => 4, 'name' => 'Lee', 'email' => 'lee@gmail.com', 'status' => 'active'],
-            ['id' => 5, 'name' => 'Muthu', 'email' => 'muthu@gmail.com', 'status' => 'banned'],
-        ];
+        $senaraiUsers = DB::table('users')
+        ->orderBy('id', 'desc')
+        //->where('status', '=', 'active')
+        ->paginate(5);
 
         $inputField = '<script>alert(\'test\')</script>';
 
@@ -70,21 +67,51 @@ class UserController extends Controller
 
     public function paparRekodUser($id)
     {
+        // $user = DB::table('users')->where('id', '=', $id)->first();
+        //$user = DB::table('users')->where('id', $id)->first();
+        $user = DB::table('users')->whereId($id)->first();
 
+        return view('folder-users.template-user-show', compact('user'));
     }
 
     public function paparBorangEdit($id)
     {
-        return view('folder-users.template-user-edit', compact('id'));
+        $user = DB::table('users')->whereId($id)->first();
+
+        return view('folder-users.template-user-edit', compact('user'));
     }
 
-    public function terimaDataBorangEdit($id)
+    public function terimaDataBorangEdit(Request $request, $id)
     {
+        // Validasi data
+        $data = $request->validate([
+            'name' => 'required|min:3|string', // cara 1 tulis validation rules
+            'email' => ['required', 'email:filter'], // cara 2 tulis validation rules
+            'phone' => ['required'],
+            'status' => ['required', 'in:active,inactive,pending,banned']
+        ]);
 
+        // Encrypt password
+        if (!is_null($request->input('password')))
+        {
+            $data['password'] = bcrypt($data['password']);
+        }
+
+
+        // Simpan ke DB
+        DB::table('users')->whereId($id)->update($data);
+
+        // Response
+        return redirect()->route('users.show', $id)
+        ->with('alert-success', 'Rekod berjaya disimpan!');
     }
 
     public function deleteUser($id)
     {
+        DB::table('users')->whereId($id)->delete();
 
+        // Response
+        return redirect()->route('users.index')
+        ->with('alert-success', 'Rekod berjaya dihapuskan!');
     }
 }
