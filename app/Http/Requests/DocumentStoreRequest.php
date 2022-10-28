@@ -25,7 +25,7 @@ class DocumentStoreRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'description' => ['required', 'min:50', 'max:1000'],
+            'description' => ['required', 'max:1000'],
             'fail' => ['mimes:png,jpg,jpeg,pdf,doc,docx,xls', 'nullable', 'sometimes', 'max:3000']
         ];
     }

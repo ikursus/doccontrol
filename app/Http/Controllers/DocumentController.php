@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DocumentStoreRequest;
@@ -15,7 +16,12 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $senaraiDokumen = DB::table('documents')->get();
+        // $senaraiDokumen = DB::table('documents')
+        // ->join('users', 'documents.user_id', '=', 'users.id')
+        // ->select('documents.*', 'users.name AS user_name', 'users.email')
+        // ->paginate(5);
+        $senaraiDokumen = Document::paginate(5);
+
 
         return view('folder-documents.index', ['senaraiDokumen' => $senaraiDokumen]);
     }
@@ -38,7 +44,21 @@ class DocumentController extends Controller
      */
     public function store(DocumentStoreRequest $request)
     {
-        return $request->all();
+        $data = $request->all();
+
+        // DB::table('documents')->insert($data);
+        // Cara 1
+        // $document = new Document;
+        // $document->user_id = auth()->id();
+        // $document->name = $request->input('name');
+        // $document->description = $request->input('description');
+        // $document->save();
+
+        // Cara 2
+        Document::create($data);
+
+        return redirect()->route('documents.index')
+        ->with('alert-success', 'Rekod berjaya disimpan');
     }
 
     /**
@@ -58,9 +78,9 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Document $document)
     {
-        //
+        return view('folder-documents.edit', compact('document'));
     }
 
     /**
@@ -70,9 +90,13 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DocumentStoreRequest $request, Document $document)
     {
-        //
+        $data = $request->all();
+        // $document = Document::findOrFail($id);
+        $document->update($data);
+
+        return back()->with('alert-success', 'Rekod berjaya dikemaskini');
     }
 
     /**
@@ -81,8 +105,10 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Document $document)
     {
-        //
+        $document->delete();
+
+        return to_route('documents.index')->with('alert-success', 'Rekod berjaya dikemaskini');
     }
 }

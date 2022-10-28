@@ -22,7 +22,7 @@
                 @forelse ($senaraiDokumen as $dokumen)
                 <tr>
                     <td>{{ $dokumen->id }}</td>
-                    <td>{{ $dokumen->user_id }}</td>
+                    <td>{{ $dokumen->user->name ?? 'TIADA NAMA' }}</td>
                     <td>{{ $dokumen->name }}</td>
                     <td>{{ $dokumen->description }}</td>
                     <td>
@@ -32,9 +32,36 @@
                         <a href="{{ route('documents.show', $dokumen->id) }}" class="btn btn-success">
                             LIHAT
                         </a>
-                        <a href="{{ route('documents.destroy', $dokumen->id) }}" class="btn btn-danger">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $dokumen->id }}">
                             DELETE
-                        </a>
+                        </button>
+
+                        <form action="{{ route('documents.destroy', $dokumen->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-delete-{{ $dokumen->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Pengesahan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Adakah anda ingin menghapuskan rekod ini?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </form>
+
                     </td>
                 </tr>
                 @empty
@@ -44,6 +71,8 @@
                 @endforelse
             </tbody>
         </table>
+
+        {{ $senaraiDokumen->links() }}
 
     </div>
     <div class="card-footer">
