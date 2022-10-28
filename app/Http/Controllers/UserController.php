@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function paparSenaraiUsers() {
-
+    public function paparSenaraiUsers()
+    {
         $pageTitle = 'Senarai Users';
 
         // $senarai_users =
@@ -54,11 +54,19 @@ class UserController extends Controller
             'status' => ['required', 'in:active,inactive,pending,banned']
         ]);
 
+        //$data = $request->all();
         // Encrypt password
         $data['password'] = bcrypt($data['password']);
 
         // Simpan ke DB
+        // Apabila menggunakan query builder (DB::table()), kita kena
+        // declare data yang dibenarkan masuk ke dalam DB
+        // Jika tidak, akan keluar error unknown column bagi data yang tiada column di dalam table
         DB::table('users')->insert($data);
+        // DB::table('users')->insert([
+        //     'name' => $request->input('name'),
+        //     'email' => $request->input('email'),
+        // ]);
 
         // Response
         return redirect()->route('users.index')
@@ -76,7 +84,8 @@ class UserController extends Controller
 
     public function paparBorangEdit($id)
     {
-        $user = DB::table('users')->whereId($id)->first();
+        // $user = DB::table('users')->whereId($id)->first();
+        $user = DB::table('users')->where('id', '=', $id)->first();
 
         return view('folder-users.template-user-edit', compact('user'));
     }
@@ -96,7 +105,6 @@ class UserController extends Controller
         {
             $data['password'] = bcrypt($data['password']);
         }
-
 
         // Simpan ke DB
         DB::table('users')->whereId($id)->update($data);

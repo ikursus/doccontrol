@@ -69,7 +69,7 @@ Route::get('users/{id}/edit', [UserController::class, 'paparBorangEdit'])->name(
 Route::patch('users/{id}/edit', [UserController::class, 'terimaDataBorangEdit'])->name('users.update');
 Route::get('users/{id}/delete', [UserController::class, 'deleteUser'])->name('users.destroy');
 
-Route::get('laporan', fn() => view('folder-reporting.index'));
+Route::get('laporan', fn() => view('folder-reporting.index'))->name('laporan.index');
 
 Route::resource('documents', DocumentController::class);
 

@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <label>Phone</label>
-            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
+            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? $user->phone }}">
             @error('phone')
             <div class="invalid-feedback">
                 {{ $message }}
