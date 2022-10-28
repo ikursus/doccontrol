@@ -71,6 +71,8 @@ Route::get('users/{id}/delete', [UserController::class, 'deleteUser'])->name('us
 
 Route::get('laporan', fn() => view('folder-reporting.index'))->name('laporan.index');
 
+// Route::resource('documents', DocumentController::class)->except('show');
+// Route::resource('documents', DocumentController::class)->only('index', 'create', 'store');
 Route::resource('documents', DocumentController::class);
 
 // Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');

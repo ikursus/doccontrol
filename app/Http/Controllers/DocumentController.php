@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\DocumentStoreRequest;
 
 class DocumentController extends Controller
@@ -14,7 +15,9 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        return view('folder-documents.index');
+        $senaraiDokumen = DB::table('documents')->get();
+
+        return view('folder-documents.index', ['senaraiDokumen' => $senaraiDokumen]);
     }
 
     /**
@@ -44,10 +47,10 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    // public function show($id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
