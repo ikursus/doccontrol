@@ -22,7 +22,7 @@ class Document extends Model
     public function user()
     {
         // return $this->belongsTo(User::class, 'user_id', 'id')->withDefault(['name' => 'TIADA NAMA']);
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withDefault(['name' => 'TIADA NAMA']);
         // return $this->belongsTo(User::class);
     }
 }

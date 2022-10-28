@@ -20,7 +20,7 @@ class DocumentController extends Controller
         // ->join('users', 'documents.user_id', '=', 'users.id')
         // ->select('documents.*', 'users.name AS user_name', 'users.email')
         // ->paginate(5);
-        $senaraiDokumen = Document::paginate(5);
+        $senaraiDokumen = Document::with('user')->paginate(5);
 
 
         return view('folder-documents.index', ['senaraiDokumen' => $senaraiDokumen]);
@@ -53,6 +53,14 @@ class DocumentController extends Controller
         // $document->name = $request->input('name');
         // $document->description = $request->input('description');
         // $document->save();
+        if ($request->hasFile('fail'))
+        {
+            $fail = $request->file('fail');
+            $fileName = 'test-' . $fail->getClientOriginalName();
+            $pathDocument = $fail->storeAs('documents', $fileName, 'simpanan_uploaded');
+
+            $data['fail'] = $fileName;
+        }
 
         // Cara 2
         Document::create($data);

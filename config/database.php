@@ -63,6 +63,26 @@ return [
             ]) : [],
         ],
 
+        'mysql2' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
@@ -91,6 +111,24 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+
+        'oracle' => [
+            'driver'         => 'oracle',
+            'tns'            => env('DB2_TNS', ''),
+            'host'           => env('DB2_HOST', ''),
+            'port'           => env('DB2_PORT', '1521'),
+            'database'       => env('DB2_DATABASE', ''),
+            'service_name'   => env('DB2_SERVICE_NAME', ''),
+            'username'       => env('DB2_USERNAME', ''),
+            'password'       => env('DB2_PASSWORD', ''),
+            'charset'        => env('DB2_CHARSET', 'AL32UTF8'),
+            'prefix'         => env('DB2_PREFIX', ''),
+            'prefix_schema'  => env('DB2_SCHEMA_PREFIX', ''),
+            'edition'        => env('DB2_EDITION', 'ora$base'),
+            'server_version' => env('DB2_SERVER_VERSION', '11g'),
+            'load_balance'   => env('DB2_LOAD_BALANCE', 'yes'),
+            'dynamic'        => [],
         ],
 
     ],

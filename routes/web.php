@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use Illuminate\Support\Facades\Http;
 
 // Route::get($uri, $action);
 
@@ -65,6 +66,27 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('logout', LogoutController::class);
 
+
+});
+
+Route::get('baca-api', function () {
+
+    // $curl = curl_init();
+
+    // curl_setopt($curl, CURLOPT_POST, 0);
+    // curl_setopt($curl, CURLOPT_URL, 'https://reqres.in/api/users');  //PROVIDE API LINK HERE
+    // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    // $result = curl_exec($curl);
+
+    // $info = curl_getinfo($curl);
+    // curl_close($curl);
+
+    // $obj = json_decode($result);
+
+    $response = Http::get('https://reqres.in/api/users');
+
+    return json_decode($response);
 
 });
 

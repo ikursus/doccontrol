@@ -15,6 +15,7 @@
                     <th>USER</th>
                     <th>NAMA</th>
                     <th>PENERANGAN</th>
+                    <th>FAIL</th>
                     <th>TINDAKAN</th>
                 </tr>
             </thead>
@@ -26,11 +27,13 @@
                     <td>{{ $dokumen->name }}</td>
                     <td>{{ $dokumen->description }}</td>
                     <td>
+                        @if (!is_null($dokumen->fail))
+                        <a href="{{ asset('uploaded') }}/{{ $dokumen->fail }}" target="_blank" class="btn btn-info">LIHAT FAIL</a>
+                        @endif
+                    </td>
+                    <td>
                         <a href="{{ route('documents.edit', $dokumen->id) }}" class="btn btn-primary">
                             EDIT
-                        </a>
-                        <a href="{{ route('documents.show', $dokumen->id) }}" class="btn btn-success">
-                            LIHAT
                         </a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $dokumen->id }}">
                             DELETE
